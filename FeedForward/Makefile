@@ -5,7 +5,7 @@ RUN_COMMAND = ./build/$(TARGET)
 
 FRAMEWORKS = Foundation
 
-CPPFLAGS = -g -Ofast -Wall -std=c++20 -I. -include Memory/Memory.hpp
+CPPFLAGS = -g -Ofast -Wall -std=c++20 -I.
 LDFLAGS = $(addprefix -framework ,$(FRAMEWORKS))
 
 IGNORE_DIRECTORIES = .vscode build

@@ -3,6 +3,7 @@
 #include <cmath>
 #include <cstdint>
 #include <cstring>
+#include <vector>
 
 #define __VEC_FOREACH(i) for (size_t i = 0; i < this->size; i++)
 
@@ -50,7 +51,7 @@ namespace Math
         void Resize(size_t size)
         {
             if (size == 0)
-                throw Error::Create("Vector", "Reize", "Vector size may not be 0.");
+                throw std::runtime_error("Vector size may not be 0.");
 
             if (this->size == size)
                 return;
@@ -114,14 +115,14 @@ namespace Math
         Type &At(size_t index)
         {
             if (index >= this->size)
-                throw Error::IndexError("Vector", "At", index, this->size);
+                throw std::out_of_range("Specified index out of bounds of vector.");
             return this->data[index];
         }
 
         const Type &At(size_t index) const
         {
             if (index >= this->size)
-                throw Error::IndexError("Vector", "At", index, this->size);
+                throw std::out_of_range("Specified index out of bounds of vector.");
             return this->data[index];
         }
 

@@ -70,7 +70,7 @@ namespace Math
         void Resize(size_t rows, size_t cols)
         {
             if (rows == 0 || cols == 0)
-                throw Error::Create("Matrix", "Resize", "Matrix dimensions may not be 0.");
+                throw std::runtime_error("Matrix dimensions may not be 0.");
 
             if (this->rows == rows && this->cols == cols)
                 return;
@@ -116,14 +116,14 @@ namespace Math
         Type &At(size_t index)
         {
             if (index >= this->rows * this->cols)
-                throw Error::IndexError("Matrix", "At", index, this->rows * this->cols);
+                throw std::out_of_range("Specified index out of bounds of matrix.");
             return this->data[index];
         }
 
         const Type &At(size_t index) const
         {
             if (index >= this->rows * this->cols)
-                throw Error::IndexError("Matrix", "At", index, this->rows * this->cols);
+                throw std::out_of_range("Specified index out of bounds of matrix.");
             return this->data[index];
         }
 
@@ -140,7 +140,7 @@ namespace Math
         Vector<Type> AsVector() const
         {
             if (this->cols != 1)
-                throw Error::Create("Matrix", "AsVector", "Only matrices with 1 column may be interpreted as a vector.");
+                throw std::runtime_error("Only matrices with 1 column may be interpreted as a vector.");
             return Vector<Type>(this->rows, this->data);
         }
 
@@ -254,8 +254,7 @@ namespace Math
         Matrix<Type> Multiply(const Matrix<Type> &mat) const
         {
             if (this->cols != mat.rows)
-                throw Error::Create("Matrix", "Multiply", "Matrix dimensions are incompatible for multiplication (%zux%zu * %zu%zu).",
-                    this->rows, this->cols, mat.rows, mat.cols);
+                throw std::runtime_error("Matrix dimensions are incompatible for multiplication.");
 
             Matrix<Type> newMat(this->rows, mat.cols);
 
@@ -279,8 +278,7 @@ namespace Math
         {
             size_t vecSize = vec.Size();
             if (this->cols != vecSize)
-                throw Error::Create("Matrix", "Multiply", "Matrix and vector dimensions are imcompatible for multiplication (%zux%zu * %zu).",
-                    this->rows, this->cols, vecSize);
+                throw std::runtime_error("Matrix and vector dimensions are imcompatible for multiplic.");
 
             Vector<Type> newVec(this->rows);
 
@@ -314,8 +312,7 @@ namespace Math
         void MultiplyInPlace(const Matrix<Type> &mat)
         {
             if (this->cols != mat.rows)
-                throw Error::Create("Matrix", "Multiply", "Matrix dimensions are incompatible for multiplication (%zux%zu * %zu%zu).",
-                    this->rows, this->cols, mat.rows, mat.cols);
+                throw std::runtime_error("Matrix dimensions are incompatible for multiplication.");
 
             Matrix<Type> newMat(this->rows, mat.cols);
 
